@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useCounterOptionsStore } from "@/store/counter-options";
-import CounterOptionsValue from "@/counter/components/CounterOptionsValue.vue";
+import { useCounterSetupStore } from "@/store/counter-setup";
+import CounterSetupValue from "@/counter/components/CounterSetupValue.vue";
 
-const counterOptions = useCounterOptionsStore();
+const counterSetup = useCounterSetupStore();
 
-const { count, squareCount } = storeToRefs(counterOptions);
-const { increment, incrementBy, $patch } = counterOptions;
+const { count, squareCount } = storeToRefs(counterSetup);
+const { increment, incrementBy, $patch } = counterSetup;
 </script>
 
 <template>
   <section>
-    <h1>Pinia Options</h1>
+    <h1>Pinia Setup</h1>
     <h4>Counter: {{ count }}</h4>
     <h4>Square counter: {{ squareCount }}</h4>
 
@@ -20,7 +20,7 @@ const { increment, incrementBy, $patch } = counterOptions;
     <button @click="incrementBy(2)">+2</button>
     <button @click="incrementBy(5)">+5</button>
     <button @click="$patch({})">Reset</button>
-    <CounterOptionsValue />
+    <CounterSetupValue />
   </section>
 </template>
 

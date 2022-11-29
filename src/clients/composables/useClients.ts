@@ -15,8 +15,12 @@ const useClients = () => {
   const store = useClientsStore();
   const { clients, currentPage, totalPages } = storeToRefs(store);
 
-  const { isLoading, data } = useQuery(["clients?page=", currentPage], () =>
-    getClients(currentPage.value)
+  const { isLoading, data } = useQuery(
+    ["clients?page=", currentPage],
+    () => getClients(currentPage.value),
+    {
+      staleTime: 60 * 1000,
+    }
   );
 
   watch(data, (clients) => {

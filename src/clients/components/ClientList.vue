@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import useClients from "@/clients/composables/useClients";
-const { clients } = useClients();
+import { toRefs } from "vue";
+import { RouterLink } from "vue-router";
+
+import type { Client } from "@/clients/types/client";
+
+const props = defineProps<{ clients: Client[] }>();
+const { clients } = toRefs(props);
 </script>
 
 <template>

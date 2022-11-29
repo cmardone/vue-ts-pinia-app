@@ -1,24 +1,40 @@
 <script setup lang="ts">
-import useClients from "@/clients/composables/useClients";
-const { currentPage, pageNumbers, setPage } = useClients();
+import { toRefs } from "vue";
+
+interface Props {
+  currentPage: number;
+  pageNumbers: number[];
+}
+
+interface Emits {
+  (e: "change", page: number): void;
+}
+
+const props = defineProps<Props>();
+const { currentPage, pageNumbers } = toRefs(props);
+
+const emit = defineEmits<Emits>();
 </script>
 
 <template>
   <div>
-    <button :disabled="currentPage <= 1" @click="setPage(currentPage - 1)">
+    <button
+      :disabled="currentPage <= 1"
+      @click="emit('change', currentPage - 1)"
+    >
       Prev
     </button>
     <button
       v-for="page of pageNumbers"
       :key="`page-button-${page}`"
       :class="{ active: page === currentPage }"
-      @click="setPage(page)"
+      @click="emit('change', page)"
     >
       {{ page }}
     </button>
     <button
       :disabled="currentPage >= pageNumbers.length"
-      @click="setPage(currentPage + 1)"
+      @click="emit('change', currentPage + 1)"
     >
       Next
     </button>

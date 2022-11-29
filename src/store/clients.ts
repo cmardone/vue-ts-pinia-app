@@ -13,6 +13,8 @@ export const useClientsStore = defineStore("clients", () => {
   const setClients = (newClients: Client[]) => (clients.value = newClients);
   const setPage = (page: number) => {
     if (currentPage.value === page) return;
+    if (page < 1) return;
+    if (page > totalPages.value) return;
     currentPage.value = page;
   };
 

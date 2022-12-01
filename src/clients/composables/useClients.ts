@@ -1,12 +1,15 @@
+import { watch, computed } from "vue";
+import { storeToRefs } from "pinia";
 import { useQuery } from "@tanstack/vue-query";
 
 import type { Client } from "@/clients/types/client";
 import clientsApi from "@/api/clients-api";
 import { useClientsStore } from "@/store/clients";
-import { storeToRefs } from "pinia";
-import { watch, computed } from "vue";
 
 const getClients = async (page: number = 1): Promise<Client[]> => {
+  /*   await new Promise((resolve) => {
+    setTimeout(() => resolve(true), 3000);
+  }); */
   const { data } = await clientsApi.get<Client[]>(`/clients?_page=${page}`);
   return data;
 };
@@ -23,9 +26,13 @@ const useClients = () => {
     }
   );
 
-  watch(data, (clients) => {
-    if (clients) store.setClients(clients);
-  });
+  watch(
+    data,
+    (clients) => {
+      if (clients) store.setClients(clients);
+    },
+    { immediate: true }
+  );
 
   return {
     isLoading,
